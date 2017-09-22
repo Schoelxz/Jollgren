@@ -1,8 +1,30 @@
+/**
+ * Copyright (C) 2017 Jesper Derander
+ * 
+ * This file is part of Jollgren.
+ *
+ * Jollgren is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jollgren is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Jollgren.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
-public class TopBar extends JMenuBar{
-    
+public class TopBar extends JMenuBar implements ActionListener{
+    private static final long serialVersionUID = 6832903853877065807L;
+
     private JMenu file, edit, settings, window;
     private JMenuItem _new, _open, _save, _save_as;
     private JMenuItem _undo, _redo, _cut, _copy, _paste;
@@ -64,6 +86,7 @@ public class TopBar extends JMenuBar{
         
         //Add "new window" item to Window menu
         this._new_window = new JMenuItem("New window");
+        _new_window.addActionListener(this);
         this.window.add(_new_window);
 
         //Add menus to this bar
@@ -71,5 +94,12 @@ public class TopBar extends JMenuBar{
         this.add(edit); 
         this.add(settings);
         this.add(window);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource() == _new_window){
+            Main.createWindow("New Window");
+        }
     }
 }
