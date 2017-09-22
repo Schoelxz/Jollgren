@@ -29,10 +29,7 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
 
     //List for objects on canvas
     ArrayList<Dot> dots = new ArrayList<>();
-    //Thickness for brush > 0 !
-    public final int THICK = 5;
-    //Color for brush
-    public Color COLOR = Color.BLACK;
+    
     public Canvas(){
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
@@ -47,24 +44,24 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
             if(i>0){
                 //Only fill gap if next Dot has an offset of more
                 //than half of it's thickness from previous Dot.
-                if(((Math.abs(dots.get(i).getX()-prevX)>(int)(this.THICK/2)) || (Math.abs(dots.get(i).getY()-prevY)>(int)(this.THICK/2))) &&
+                if(((Math.abs(dots.get(i).getX()-prevX)>(int)(Settings.THICK/2)) || (Math.abs(dots.get(i).getY()-prevY)>(int)(Settings.THICK/2))) &&
                      dots.get(i-1).inLine() == Dot.INLINE && dots.get(i).inLine() == Dot.INLINE ){
                     Graphics2D g2d = (Graphics2D) g.create();
-                    g2d.setStroke(new BasicStroke((float) this.THICK));
+                    g2d.setStroke(new BasicStroke((float) Settings.THICK));
 
                     //+(int)(this.THICK/2) used in order for line to 
                     // start from middle of previous Dot.
-                    g2d.drawLine(prevX+(int)(this.THICK/2), prevY+(int)(this.THICK/2), 
-                                 dots.get(i).getX()+(int)(this.THICK/2), dots.get(i).getY()+(int)(this.THICK/2));
+                    g2d.drawLine(prevX+(int)(Settings.THICK/2), prevY+(int)(Settings.THICK/2), 
+                                 dots.get(i).getX()+(int)(Settings.THICK/2), dots.get(i).getY()+(int)(Settings.THICK/2));
                     g2d.dispose();
                     
                 }
                 else{
-                    g.fillRect(dots.get(i).getX(), dots.get(i).getY(), this.THICK, this.THICK);
+                    g.fillRect(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
                 }
             }
             else{
-                g.fillRect(dots.get(i).getX(), dots.get(i).getY(), this.THICK, this.THICK);
+                g.fillRect(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
             }
             prevX = dots.get(i).getX(); prevY = dots.get(i).getY();
             
@@ -86,7 +83,8 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
     @Override
     public void mouseReleased(MouseEvent e) {
         if(e.getButton()==MouseEvent.BUTTON1){
-            Dot d = new Dot(new int[] {e.getX()-(int)(this.THICK/2),e.getY()-(int)(this.THICK/2)},this.COLOR, Dot.NOLINE);
+            Dot d = new Dot(new int[] {e.getX()-(int)(Settings.THICK/2),e.getY()-(int)(Settings.THICK/2)},
+                            new Color(Settings.RED, Settings.GREEN, Settings.BLUE), Dot.NOLINE);
             dots.add(d);
             this.repaint();
         }
@@ -98,7 +96,8 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
     @Override 
     public void mouseDragged(MouseEvent e) {
         int curX = e.getX(), curY = e.getY();
-        Dot d = new Dot(new int[] {curX-(int)(this.THICK/2),curY-(int)(this.THICK/2)},this.COLOR, Dot.INLINE);
+        Dot d = new Dot(new int[] {curX-(int)(Settings.THICK/2),curY-(int)(Settings.THICK/2)},
+                        new Color(Settings.RED, Settings.GREEN, Settings.BLUE), Dot.INLINE);
         dots.add(d);
         this.repaint();
     

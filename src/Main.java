@@ -23,9 +23,9 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args){
         //enable hardware acceleration
-        System.setProperty("sun.java2d.opengl", "true");
-        createWindow("Window");
-        
+        new Settings();
+        System.setProperty("sun.java2d.opengl", Settings.HWACCEL.toString());
+        createWindow("Window");       
     }
 
     public static void createWindow(String title){
@@ -35,7 +35,7 @@ public class Main {
         JMenuBar top = new TopBar();
         f.setJMenuBar(top);
         f.add(c);
-        f.setSize(800, 800);
+        f.setSize(Settings.WINX, Settings.WINY);
         f.setLocationRelativeTo(null);
         f.setVisible(true);
     }
