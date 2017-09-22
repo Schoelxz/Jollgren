@@ -20,18 +20,22 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.awt.Desktop;
+import java.net.URI;
 
 
 public class TopBar extends JMenuBar implements ActionListener{
     private static final long serialVersionUID = 6832903853877065807L;
 
-    private JMenu file, edit, settings, window;
+    private JMenu file, edit, settings, window, help;
     private JMenuItem _new, _open, _save, _save_as;
     private JMenuItem _undo, _redo, _cut, _copy, _paste;
     private JMenuItem _preferences;
     private JMenuItem _new_window;
+    private JMenuItem _view_license, _about;
 
     public TopBar(){
+
         //Create file menu object
         this.file = new JMenu("File");
 
@@ -41,8 +45,11 @@ public class TopBar extends JMenuBar implements ActionListener{
         //Create settings menu object
         this.settings = new JMenu("Settings");
 
-         //Create window menu object
-         this.window = new JMenu("Window");
+        //Create window menu object
+        this.window = new JMenu("Window");
+
+        //Create Help menu object
+        this.help = new JMenu("Help");
 
         //Add "new" item to file menu
         this._new = new JMenuItem("New file");
@@ -86,20 +93,43 @@ public class TopBar extends JMenuBar implements ActionListener{
         
         //Add "new window" item to Window menu
         this._new_window = new JMenuItem("New window");
-        _new_window.addActionListener(this);
+        this._new_window.addActionListener(this);
         this.window.add(_new_window);
+
+        //Add "view license" item to Help menu
+        this._view_license = new JMenuItem("View license");
+        this._view_license.addActionListener(this);
+        this.help.add(_view_license);
+
+        //Add "about" item to Help menu
+        this._about = new JMenuItem("About");
+        this._about.addActionListener(this);
+        this.help.add(_about);
 
         //Add menus to this bar
         this.add(file); 
         this.add(edit); 
         this.add(settings);
         this.add(window);
+        this.add(help);
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == _new_window){
             Main.createWindow("New Window");
+        }
+        else if(e.getSource() == _view_license){
+            try{
+                Desktop.getDesktop().browse(new URI("https://www.gnu.org/licenses/gpl-3.0.en.html"));
+            }catch(Exception ex){
+                ex.printStackTrace();
+                System.exit(1);
+            }
+            
+        }
+        else if(e.getSource() == _about){
+            new About();
         }
     }
 }

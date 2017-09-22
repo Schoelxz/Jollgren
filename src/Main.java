@@ -36,6 +36,7 @@ public class Main {
         f.setJMenuBar(top);
         f.add(c);
         f.setSize(800, 800);
+        f.setLocationRelativeTo(null);
         f.setVisible(true);
     }
 }

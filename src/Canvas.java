@@ -72,13 +72,7 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
     }
     
     @Override
-    public void mouseClicked(MouseEvent e){
-        if(e.getButton()==MouseEvent.BUTTON1){
-            Dot d = new Dot(new int[] {e.getX()-(int)(this.THICK/2),e.getY()-(int)(this.THICK/2)},this.COLOR, Dot.NOLINE);
-            dots.add(d);
-            this.repaint();
-        }
-    }
+    public void mouseClicked(MouseEvent e){}
     
     @Override
     public void mouseEntered(MouseEvent e) {}
