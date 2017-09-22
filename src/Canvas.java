@@ -45,11 +45,17 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
         for(int i = 0; i < dots.size(); i++){
             g.setColor(dots.get(i).getColor());
             if(i>0){
+                //Only fill gap if next Dot has an offset of more
+                //than half of it's thickness from previous Dot.
                 if(((Math.abs(dots.get(i).getX()-prevX)>(int)(this.THICK/2)) || (Math.abs(dots.get(i).getY()-prevY)>(int)(this.THICK/2))) &&
                      dots.get(i-1).inLine() == Dot.INLINE && dots.get(i).inLine() == Dot.INLINE ){
                     Graphics2D g2d = (Graphics2D) g.create();
                     g2d.setStroke(new BasicStroke((float) this.THICK));
-                    g2d.drawLine(prevX, prevY, dots.get(i).getX(), dots.get(i).getY());
+
+                    //+(int)(this.THICK/2) used in order for line to 
+                    // start from middle of previous Dot.
+                    g2d.drawLine(prevX+(int)(this.THICK/2), prevY+(int)(this.THICK/2), 
+                                 dots.get(i).getX()+(int)(this.THICK/2), dots.get(i).getY()+(int)(this.THICK/2));
                     g2d.dispose();
                     
                 }
