@@ -4,6 +4,6 @@ The jolly java painting program
 1. Implement basic IO like saving and opening files of jpg,png,bmp,gif... formats  
 2. Add toolbar  
 3. Add tools to toolbar like brush, erasor, paintbucket, etc...  
-4. Add menu for different settings/preferences  
+4. Add menu for different settings/preferences - in progress  
 
 
