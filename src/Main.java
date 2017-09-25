@@ -24,7 +24,7 @@ public class Main {
     public static void main(String[] args){
         //enable hardware acceleration
         new Settings();
-        System.setProperty("sun.java2d.opengl", Settings.HWACCEL.toString());
+        System.setProperty("sun.java2d.opengl", String.valueOf(Settings.HWACCEL));
         createWindow("Window");       
     }
 

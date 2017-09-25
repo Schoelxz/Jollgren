@@ -26,14 +26,21 @@ import java.io.*;
 class InvalidFormatException extends Exception {
     private static final long serialVersionUID = -3812570707864472667L;    
 }
+class TypeNotImplementedException extends Exception{
+    private static final long serialVersionUID = 3332190948251899122L;
+}
 
 public class Settings{
+    /**
+     * Important! In order for this to work all variables below must be of primitive type
+     * and be applicable to String.valueOf().
+     */
 
-    public static int THICK; //Brush thicknes
-    public static int RED; //Brush red color level
-    public static int GREEN; //Brush green color level
-    public static int BLUE; //Brush blue color level
-    public static Boolean HWACCEL; //Hardware acceleration
+    public static int  THICK; //Brush thicknes
+    public static int  RED; //Brush red color level
+    public static int  GREEN; //Brush green color level
+    public static int  BLUE; //Brush blue color level
+    public static boolean HWACCEL; //Hardware acceleration
     public static int WINX;        //Main window x size
     public static int WINY;        //Main window y size
     public static int CANX;        //Canvas x size
@@ -54,45 +61,36 @@ public class Settings{
             loadFallback();
             JOptionPane.showMessageDialog(null, "The settings file is corrupted so default settings have been loaded.");
         }
+        catch(IllegalAccessException e){
+            //Casued by above variables not being accessible, i.e. they're not public or declared final
+            e.printStackTrace();
+            System.exit(1);
+        }
+        catch(TypeNotImplementedException e){
+            //Caused by one of the above primitive types not being considered in load() function
+            e.printStackTrace();
+            System.exit(1);
+        }
         
         
     }
-    private void load(Field[] f, Scanner sc) throws InvalidFormatException{
-        if(f[0].getName().equals(sc.next())){
-            THICK = sc.nextInt();
-        }else{throw new InvalidFormatException();}
-        
-        if(f[1].getName().equals(sc.next())){
-            RED = sc.nextInt();
-        }else{throw new InvalidFormatException();}
-
-        if(f[2].getName().equals(sc.next())){
-            GREEN = sc.nextInt();
-        }else{throw new InvalidFormatException();}
-
-        if(f[3].getName().equals(sc.next())){
-            BLUE = sc.nextInt();
-        }else{throw new InvalidFormatException();}
-
-        if(f[4].getName().equals(sc.next())){
-            HWACCEL = sc.nextBoolean();
-        }else{throw new InvalidFormatException();}
-
-        if(f[5].getName().equals(sc.next())){
-            WINX = sc.nextInt();
-        }else{throw new InvalidFormatException();}
-
-        if(f[6].getName().equals(sc.next())){
-            WINY = sc.nextInt();
-        }else{throw new InvalidFormatException();}
-
-        if(f[7].getName().equals(sc.next())){
-            CANX = sc.nextInt();
-        }else{throw new InvalidFormatException();}
-
-        if(f[8].getName().equals(sc.next())){
-            CANY = sc.nextInt();
-        }else{throw new InvalidFormatException();}
+    private void load(Field[] f, Scanner sc) throws InvalidFormatException, IllegalAccessException, TypeNotImplementedException{
+        for(Field ff : f){
+            if(sc.hasNext() && ff.getName().equals(sc.next())){
+                if(ff.getType().equals(int.class)){
+                    ff.setInt(null,sc.nextInt());
+                }
+                else if (ff.getType().equals(boolean.class)){
+                    ff.setBoolean(null, sc.nextBoolean());
+                }
+                else{
+                    throw new TypeNotImplementedException();
+                }
+            }
+            else{
+                throw new InvalidFormatException();
+            }         
+        }
     }
 
     /**
@@ -117,13 +115,24 @@ public class Settings{
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
             for(Field ff : f){
-                bw.write(ff.getName() + " " + ff.get(null).toString());
-                bw.newLine();
+                if(ff.getType().equals(int.class)){
+                    bw.write(ff.getName() + " " + String.valueOf((int)ff.get(null)));
+                    bw.newLine();
+                }
+                else if(ff.getType().equals(boolean.class)){
+                    bw.write(ff.getName() + " " + String.valueOf((boolean)ff.get(null)));
+                    bw.newLine();
+                }
+                else{
+                    bw.close();
+                    throw new TypeNotImplementedException();
+                }
+                
             }
             bw.newLine();
             bw.close();
 
-        }catch(IllegalAccessException | IOException e){
+        }catch(IllegalAccessException | IOException | TypeNotImplementedException e){
             e.printStackTrace();
             System.exit(1);
         }
