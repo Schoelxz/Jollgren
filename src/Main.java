@@ -17,20 +17,29 @@
  * along with Jollgren.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.awt.event.*;
 import javax.swing.*;
 
 
 public class Main {
     public static void main(String[] args){
         //enable hardware acceleration
-        new Settings();
+        Settings settings = new Settings();
         System.setProperty("sun.java2d.opengl", String.valueOf(Settings.HWACCEL));
-        createWindow("Window");       
+        JFrame mainFrame = createWindow("Untitled", JFrame.DO_NOTHING_ON_CLOSE);
+        mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e){
+                settings.save(); //Save settings
+                mainFrame.dispose(); //Dispose of frame
+                System.exit(0); //exit program
+            }
+        });
     }
 
-    public static void createWindow(String title){
+    public static JFrame createWindow(String title ,int closeOp){
         JFrame f = new JFrame(title);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(closeOp);
         JPanel c = new Canvas();
         JMenuBar top = new TopBar();
         f.setJMenuBar(top);
@@ -38,6 +47,7 @@ public class Main {
         f.setSize(Settings.WINX, Settings.WINY);
         f.setLocationRelativeTo(null);
         f.setVisible(true);
+        return(f);
     }
 }
 

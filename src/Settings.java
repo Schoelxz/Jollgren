@@ -97,6 +97,7 @@ public class Settings{
      * Will load default settings
      */
     private void loadFallback(){
+        //Put default values here
         THICK = 5;
         RED = 0;
         GREEN = 0;
@@ -139,6 +140,9 @@ public class Settings{
         
     }
 
+    public void save(){
+        createNew(this.getClass().getDeclaredFields());
+    }
     
  }
 

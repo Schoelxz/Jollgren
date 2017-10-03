@@ -90,6 +90,7 @@ public class TopBar extends JMenuBar implements ActionListener{
         //Add "Preferences" item to settings menu
         this._preferences = new JMenuItem("Preferences");
         this.settings.add(_preferences);
+        this._preferences.addActionListener(this);
         
         //Add "new window" item to Window menu
         this._new_window = new JMenuItem("New window");
@@ -116,10 +117,10 @@ public class TopBar extends JMenuBar implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
-        if(e.getSource() == _new_window){
-            Main.createWindow("New Window");
+        if(e.getSource() == this._new_window){
+            Main.createWindow("Untitled",JFrame.DISPOSE_ON_CLOSE);
         }
-        else if(e.getSource() == _view_license){
+        else if(e.getSource() == this._view_license){
             try{
                 Desktop.getDesktop().browse(new URI("https://www.gnu.org/licenses/gpl-3.0.en.html"));
             }catch(Exception ex){
@@ -128,8 +129,11 @@ public class TopBar extends JMenuBar implements ActionListener{
             }
             
         }
-        else if(e.getSource() == _about){
+        else if(e.getSource() == this._about){
             new About();
+        }
+        else if (e.getSource() == this._preferences){
+            new Preferences();
         }
     }
 }

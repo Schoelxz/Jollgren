@@ -27,6 +27,7 @@ public class About extends JFrame{
     public About(){
         this.setTitle("About");
         this.setSize(450,220);
+        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         String text = "Version: 1.0 - dev build." + "<br>" + "<br>" 
                     + "Jollgren Copyright (C) 2017 Jesper Derander." + "<br>" + "<br>"
