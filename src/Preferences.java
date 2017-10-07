@@ -62,6 +62,13 @@ public class Preferences extends JFrame {
         });
         this.advancedPref.add(hwa);
 
+        //'Window' tab content
+        FlowLayout windowLayout = new FlowLayout();
+        this.windowPref.setLayout(windowLayout);
+        windowLayout.setAlignment(FlowLayout.LEFT);
+        JTextField winWidth = new JTextField("width");
+        this.windowPref.add(winWidth);
+
         //Set close operation
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
