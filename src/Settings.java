@@ -74,7 +74,7 @@ public class Settings{
         
         
     }
-    private void load(Field[] f, Scanner sc) throws InvalidFormatException, IllegalAccessException, TypeNotImplementedException{
+    private static void load(Field[] f, Scanner sc) throws InvalidFormatException, IllegalAccessException, TypeNotImplementedException{
         for(Field ff : f){
             if(sc.hasNext() && ff.getName().equals(sc.next())){
                 if(ff.getType().equals(int.class)){
@@ -96,7 +96,7 @@ public class Settings{
     /**
      * Will load default settings
      */
-    private void loadFallback(){
+    private static void loadFallback(){
         //Put default values here
         THICK = 5;
         RED = 0;
@@ -109,7 +109,7 @@ public class Settings{
         CANY = 800;
     }
 
-    private void createNew(Field[] f){
+    private static void createNew(Field[] f){
         try{
             File file = new File("Settings.conf");
             FileOutputStream fos = new FileOutputStream(file);
@@ -140,8 +140,8 @@ public class Settings{
         
     }
 
-    public void save(){
-        createNew(this.getClass().getDeclaredFields());
+    public static void save(){
+        Settings.createNew(Settings.class.getDeclaredFields());
     }
     
  }

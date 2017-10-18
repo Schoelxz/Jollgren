@@ -23,14 +23,21 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args){
+        new Settings();
+
         //enable hardware acceleration
-        Settings settings = new Settings();
-        System.setProperty("sun.java2d.opengl", String.valueOf(Settings.HWACCEL));
+        //Use d3d for Windows and openGL for other
+        if(System.getProperty("os.name").startsWith("Windows")){
+            System.setProperty("sun.java2d.d3d", String.valueOf(Settings.HWACCEL));
+        }else{
+            System.setProperty("sun.java2d.opengl", String.valueOf(Settings.HWACCEL));
+        }
+        
         JFrame mainFrame = createWindow("Untitled", JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e){
-                settings.save(); //Save settings
+                Settings.save(); //Save settings
                 mainFrame.dispose(); //Dispose of frame
                 System.exit(0); //exit program
             }
