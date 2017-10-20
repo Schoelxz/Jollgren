@@ -25,7 +25,7 @@ import javax.swing.*;
 import java.lang.Math;
 
 
-public class Canvas extends JPanel implements MouseListener, MouseMotionListener{
+public class Canvas extends JPanel implements KeyListener, MouseListener, MouseMotionListener{
     private static final long serialVersionUID = 4865446981722813115L;
 
     //List for objects on canvas
@@ -35,6 +35,8 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
         this.dots = new ArrayList<>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+        this.setFocusable(true);
+        this.addKeyListener(this);
     }
     @Override
     public void paintComponent(Graphics g){
@@ -104,6 +106,19 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
         this.repaint();
     
     }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+       if(e.getKeyCode() == KeyEvent.VK_Z && (e.getModifiers() & KeyEvent.CTRL_MASK) != 0){
+            this.undo();
+       }
+    }
+    
+    @Override
+    public void keyReleased(KeyEvent e) {}
+    
+    @Override
+    public void keyTyped(KeyEvent e) {}
 
     public void undo(){
         if(this.dots.size() > 0){
