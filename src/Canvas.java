@@ -122,12 +122,14 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
 
     public void undo(){
         if(this.dots.size() > 0){
-            if(this.dots.get(this.dots.size()-1).inLine()){
+            //Remove single dot
+            this.dots.remove(this.dots.size()-1);
+            //All lines end with a single dot, thus if a line follows after removal of dot,
+            //then remove the line.
+            if(this.dots.size() > 0 && this.dots.get(this.dots.size()-1).inLine()){
                 while(this.dots.size() > 0 && this.dots.get(this.dots.size()-1).inLine()){
                     this.dots.remove(this.dots.size()-1);
                 }
-            }else{
-                this.dots.remove(this.dots.size()-1);
             }
         }
         this.validate();
