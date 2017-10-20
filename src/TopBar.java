@@ -27,6 +27,7 @@ import java.net.URI;
 public class TopBar extends JMenuBar implements ActionListener{
     private static final long serialVersionUID = 6832903853877065807L;
 
+    private Canvas canvas;
     private JMenu file, edit, settings, window, help;
     private JMenuItem _new, _open, _save, _save_as;
     private JMenuItem _undo, _redo, _cut, _copy, _paste;
@@ -34,7 +35,9 @@ public class TopBar extends JMenuBar implements ActionListener{
     private JMenuItem _new_window;
     private JMenuItem _view_license, _about;
 
-    public TopBar(){
+    public TopBar(Canvas c){
+        //Bind this to given canvas
+        this.canvas = c;
 
         //Create file menu object
         this.file = new JMenu("File");
@@ -70,6 +73,7 @@ public class TopBar extends JMenuBar implements ActionListener{
         //Add "undo" item to 'edit' menu
         this._undo = new JMenuItem("Undo");
         this.edit.add(_undo);
+        this._undo.addActionListener(this);
 
         //Add "redo" item to 'edit' menu
         this._redo = new JMenuItem("Redo");
@@ -134,6 +138,9 @@ public class TopBar extends JMenuBar implements ActionListener{
         }
         else if (e.getSource() == this._preferences){
             new Preferences();
+        }
+        else if(e.getSource() == this._undo){
+            this.canvas.undo();
         }
     }
 }

@@ -47,8 +47,8 @@ public class Main {
     public static JFrame createWindow(String title ,int closeOp){
         JFrame f = new JFrame(title);
         f.setDefaultCloseOperation(closeOp);
-        JPanel c = new Canvas();
-        JMenuBar top = new TopBar();
+        Canvas c = new Canvas();
+        JMenuBar top = new TopBar(c);
         f.setJMenuBar(top);
         f.add(c);
         f.setSize(Settings.WINX, Settings.WINY);

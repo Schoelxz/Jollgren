@@ -18,6 +18,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
@@ -28,9 +29,10 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
     private static final long serialVersionUID = 4865446981722813115L;
 
     //List for objects on canvas
-    ArrayList<Dot> dots = new ArrayList<>();
+    private ArrayList<Dot> dots;
     
     public Canvas(){
+        this.dots = new ArrayList<>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }
@@ -101,6 +103,24 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
         dots.add(d);
         this.repaint();
     
+    }
+
+    public void undo(){
+        if(this.dots.size() > 0){
+            if(this.dots.get(this.dots.size()-1).inLine()){
+                while(this.dots.size() > 0 && this.dots.get(this.dots.size()-1).inLine()){
+                    this.dots.remove(this.dots.size()-1);
+                }
+            }else{
+                this.dots.remove(this.dots.size()-1);
+            }
+        }
+        this.validate();
+        this.repaint();
+        
+    }
+    public void redo(){
+
     }
 
 }

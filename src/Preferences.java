@@ -21,10 +21,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Preferences extends JFrame {
+public class Preferences extends JFrame implements FocusListener{
     private static final long serialVersionUID = -7686319823287726250L;
 
-    private JPanel windowPref, advancedPref;
+    private JPanel windowPref, advancedPref, hwPanel, winxLabelPanel, winxTextPanel, winyLabelPanel, winyTextPanel;
+    private JLabel winxLabel, winyLabel;
+    protected JTextField winWidth, winHeight;
     private JTabbedPane tp;
 
     public Preferences(){
@@ -45,6 +47,7 @@ public class Preferences extends JFrame {
         //Create Layouts
         GridLayout tabLayout = new GridLayout(20,0,2,2);
         FlowLayout rowLayout = new FlowLayout();
+        
         //'Advanced' tab content
         this.advancedPref.setLayout(tabLayout);
         rowLayout.setAlignment(FlowLayout.LEFT);
@@ -62,63 +65,41 @@ public class Preferences extends JFrame {
                 });
             }
         });
-        JPanel hwPanel = new JPanel();
-        hwPanel.setLayout(rowLayout);
-        hwPanel.add(hwa);
-        this.advancedPref.add(hwPanel);
+        this.hwPanel = new JPanel();
+        this.hwPanel.setLayout(rowLayout);
+        this.hwPanel.add(hwa);
+        this.advancedPref.add(this.hwPanel);
 
         //'Window' tab content
         this.windowPref.setLayout(tabLayout);
         
         //Window width label
-        JPanel winxLabelPanel = new JPanel();
-        winxLabelPanel.setLayout(rowLayout);
-        JLabel winxLabel = new JLabel("Start width for main window");
-        winxLabelPanel.add(winxLabel);
+        this.winxLabelPanel = new JPanel();
+        this.winxLabelPanel.setLayout(rowLayout);
+        this.winxLabel = new JLabel("Start width for main window");
+        this.winxLabelPanel.add(this.winxLabel);
 
         //Window width textfield
-        JPanel winxTextPanel = new JPanel();
-        winxTextPanel.setLayout(rowLayout);
-        JTextField winWidth = new JTextField(Integer.toString(Settings.WINX), 15);
-        winWidth.setHorizontalAlignment(JTextField.RIGHT);
-        winWidth.addFocusListener(new FocusListener(){
-        
-            @Override
-            public void focusLost(FocusEvent e) {
-                Settings.WINX = Integer.valueOf(winWidth.getText());
-            }
-        
-            @Override
-            public void focusGained(FocusEvent e) {
-                
-            }
-        });
-        winxTextPanel.add(winWidth);
+        this.winxTextPanel = new JPanel();
+        this.winxTextPanel.setLayout(rowLayout);
+        this.winWidth = new JTextField(Integer.toString(Settings.WINX), 15);
+        this.winWidth.setHorizontalAlignment(JTextField.RIGHT);
+        this.winWidth.addFocusListener(this);
+        this.winxTextPanel.add(winWidth);
 
         //Window height label
-        JPanel winyLabelPanel = new JPanel();
-        winyLabelPanel.setLayout(rowLayout);
-        JLabel winyLabel = new JLabel("Start height for main window");
-        winyLabelPanel.add(winyLabel);
+        this.winyLabelPanel = new JPanel();
+        this.winyLabelPanel.setLayout(rowLayout);
+        this.winyLabel = new JLabel("Start height for main window");
+        this.winyLabelPanel.add(this.winyLabel);
 
         //Window width textfield
-        JPanel winyTextPanel = new JPanel();
-        winyTextPanel.setLayout(rowLayout);
-        JTextField winHeight = new JTextField(Integer.toString(Settings.WINY), 15);
-        winHeight.setHorizontalAlignment(JTextField.RIGHT);
-        winHeight.addFocusListener(new FocusListener(){
-            
-                @Override
-                public void focusLost(FocusEvent e) {
-                    Settings.WINY = Integer.valueOf(winHeight.getText());
-                }
-            
-                @Override
-                public void focusGained(FocusEvent e) {
-                    
-                }
-            });
-        winyTextPanel.add(winHeight);
+        this.winyTextPanel = new JPanel();
+        this.winyTextPanel.setLayout(rowLayout);
+        this.winHeight = new JTextField(Integer.toString(Settings.WINY), 15);
+        this.winHeight.setHorizontalAlignment(JTextField.RIGHT);
+        this.winHeight.addFocusListener(this);
+        this.winyTextPanel.add(winHeight);
 
         //Add items in order
         this.windowPref.add(winxLabelPanel);
@@ -139,7 +120,20 @@ public class Preferences extends JFrame {
 
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    @Override
+    public void focusLost(FocusEvent e) {
+        if(e.getSource() == this.winWidth){
+            Settings.WINX = Integer.valueOf(this.winWidth.getText());
+        }
+        else if(e.getSource() == this.winHeight){
+            Settings.WINY = Integer.valueOf(this.winHeight.getText());
+        }
+    }
 
+    @Override
+    public void focusGained(FocusEvent e) {
+        
     }
 
 }
