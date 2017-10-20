@@ -25,6 +25,15 @@ public class Main {
     public static void main(String[] args){
         new Settings();
 
+        //Set system look and feel
+        try {
+             UIManager.setLookAndFeel(
+                 UIManager.getSystemLookAndFeelClassName());
+        } 
+        catch (Exception e) {
+             JOptionPane.showMessageDialog(null,"Couldn't set theme, using default.");
+        }
+
         //enable hardware acceleration
         //Use d3d for Windows and openGL for other
         if(System.getProperty("os.name").startsWith("Windows")){
