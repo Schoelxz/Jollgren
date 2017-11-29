@@ -148,7 +148,7 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
         this.repaint();
         
     }
-    //Recursive implementation. Might do this with undo also.
+    //Recursive implementation. || #PLANNED!# Might do this with undo also.
     public void redo(){
         if(this.removedDots.size() > 0){
             Dot d = this.removedDots.remove(this.removedDots.size()-1);

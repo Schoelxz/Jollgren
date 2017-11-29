@@ -36,7 +36,7 @@ public class TopBar extends JMenuBar implements ActionListener{
     private JMenuItem _view_license, _about;
 
     public TopBar(Canvas c){
-        //Bind this to given canvas
+        //Bind this canvas to given canvas
         this.canvas = c;
 
         //Create file menu object
@@ -78,6 +78,7 @@ public class TopBar extends JMenuBar implements ActionListener{
         //Add "redo" item to 'edit' menu
         this._redo = new JMenuItem("Redo");
         this.edit.add(_redo);
+        this._redo.addActionListener(this);
 
         //Add "cut" item to 'edit' menu
         this._cut = new JMenuItem("Cut");
@@ -141,6 +142,9 @@ public class TopBar extends JMenuBar implements ActionListener{
         }
         else if(e.getSource() == this._undo){
             this.canvas.undo();
+        }
+        else  if(e.getSource() == this._redo){
+            this.canvas.redo();
         }
     }
 }
