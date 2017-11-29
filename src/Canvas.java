@@ -30,9 +30,13 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
 
     //List for objects on canvas
     private ArrayList<Dot> dots;
+
+    //List for removed objects
+    private ArrayList<Dot> removedDots;
     
     public Canvas(){
         this.dots = new ArrayList<>();
+        this.removedDots=new ArrayList<>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.setFocusable(true);
@@ -112,6 +116,9 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
        if(e.getKeyCode() == KeyEvent.VK_Z && (e.getModifiers() & KeyEvent.CTRL_MASK) != 0){
             this.undo();
        }
+       else if(e.getKeyCode() == KeyEvent.VK_Y && (e.getModifiers() & KeyEvent.CTRL_MASK) != 0){
+           this.redo();
+       }
     }
     
     @Override
@@ -123,12 +130,15 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
     public void undo(){
         if(this.dots.size() > 0){
             //Remove single dot
-            this.dots.remove(this.dots.size()-1);
+            this.removedDots.add(dots.remove(this.dots.size()-1));
             //All lines end with a single dot, thus if a line follows after removal of dot,
             //then remove the line.
             if(this.dots.size() > 0 && this.dots.get(this.dots.size()-1).inLine()){
                 while(this.dots.size() > 0 && this.dots.get(this.dots.size()-1).inLine()){
-                    this.dots.remove(this.dots.size()-1);
+                    //Remove object from the dot list
+                    Dot d = this.dots.remove(this.dots.size()-1);
+                    //Save removed object in remoedDots list
+                    this.removedDots.add(d);
                 }
             }
         }
@@ -136,8 +146,16 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
         this.repaint();
         
     }
+    //Recursive implementation. Might do this with undo also.
     public void redo(){
-
+        if(this.removedDots.size() > 0){
+            Dot d = this.removedDots.remove(this.removedDots.size()-1);
+            this.dots.add(d);
+            if(d.inLine() && this.removedDots.size() > 0){
+                this.redo();
+            }
+            this.repaint();
+        }
     }
 
 }
