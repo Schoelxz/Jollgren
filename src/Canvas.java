@@ -91,9 +91,11 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
     @Override
     public void mouseReleased(MouseEvent e) {
         if(e.getButton()==MouseEvent.BUTTON1){
-            Dot d = new Dot(new int[] {e.getX()-(int)(Settings.THICK/2),e.getY()-(int)(Settings.THICK/2)},
+            Dot d = new Dot(new int[]{e.getX()-(int)(Settings.THICK/2),e.getY()-(int)(Settings.THICK/2)},
                             new Color(Settings.RED, Settings.GREEN, Settings.BLUE), Dot.NOLINE);
-            dots.add(d);
+            this.dots.add(d);
+            //Remove history
+            this.removedDots = new ArrayList<>();
             this.repaint();
         }
     }
@@ -104,9 +106,9 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
     @Override 
     public void mouseDragged(MouseEvent e) {
         int curX = e.getX(), curY = e.getY();
-        Dot d = new Dot(new int[] {curX-(int)(Settings.THICK/2),curY-(int)(Settings.THICK/2)},
+        Dot d = new Dot(new int[]{curX-(int)(Settings.THICK/2),curY-(int)(Settings.THICK/2)},
                         new Color(Settings.RED, Settings.GREEN, Settings.BLUE), Dot.INLINE);
-        dots.add(d);
+        this.dots.add(d);
         this.repaint();
     
     }
