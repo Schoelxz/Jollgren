@@ -55,7 +55,16 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
                 if(((Math.abs(dots.get(i).getX()-prevX)>(int)(Settings.THICK/2)) || (Math.abs(dots.get(i).getY()-prevY)>(int)(Settings.THICK/2))) &&
                      dots.get(i-1).inLine() == Dot.INLINE && dots.get(i).inLine() == Dot.INLINE ){
                     Graphics2D g2d = (Graphics2D) g.create();
-                    g2d.setStroke(new BasicStroke((float) Settings.THICK));
+                    BasicStroke stroke;
+                    switch(Settings.STYLE){
+                        case 0: stroke = new BasicStroke((float) Settings.THICK);
+                                break;
+                        case 1: stroke = new BasicStroke((float) Settings.THICK, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+                                break;
+                        default: stroke = new BasicStroke((float) Settings.THICK);
+                                 break;
+                    }
+                    g2d.setStroke(stroke);
 
                     //+(int)(this.THICK/2) used in order for line to 
                     // start from middle of previous Dot.
@@ -65,11 +74,24 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
                     
                 }
                 else{
-                    g.fillRect(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
+                    switch(Settings.STYLE){
+                        case 0: g.fillRect(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
+                                break;
+                        case 1: g.fillOval(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
+                                break;
+                        default: g.fillRect(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
+                                 break;
+                    }
                 }
             }
             else{
-                g.fillRect(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
+                switch(Settings.STYLE){
+                    case 0: g.fillRect(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
+                            break;
+                    case 1: g.fillOval(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
+                            break;
+                    default: break;
+                }
             }
             prevX = dots.get(i).getX(); prevY = dots.get(i).getY();
             

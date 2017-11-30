@@ -37,6 +37,7 @@ public class Settings{
      */
 
     public static int  THICK; //Brush thicknes
+    public static int  STYLE; //Brush style
     public static int  RED; //Brush red color level
     public static int  GREEN; //Brush green color level
     public static int  BLUE; //Brush blue color level
@@ -99,6 +100,7 @@ public class Settings{
     private static void loadFallback(){
         //Put default values here
         THICK = 5;
+        STYLE = 0;
         RED = 0;
         GREEN = 0;
         BLUE = 0;
