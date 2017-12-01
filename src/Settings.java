@@ -36,16 +36,16 @@ public class Settings{
      * and be applicable to String.valueOf().
      */
 
-    public static int  THICK; //Brush thicknes
-    public static int  STYLE; //Brush style
-    public static int  RED; //Brush red color level
-    public static int  GREEN; //Brush green color level
-    public static int  BLUE; //Brush blue color level
-    public static boolean HWACCEL; //Hardware acceleration
-    public static int WINX;        //Main window x size
-    public static int WINY;        //Main window y size
-    public static int CANX;        //Canvas x size
-    public static int CANY;       //Canvas y size 
+    public static int     THICK;    //Brush thicknes
+    public static int     STYLE;    //Brush style
+    public static int     RED;      //Brush red color level
+    public static int     GREEN;    //Brush green color level
+    public static int     BLUE;     //Brush blue color level
+    public static boolean HWACCEL;  //Hardware acceleration
+    public static int     WINX;     //Main window x size
+    public static int     WINY;     //Main window y size
+    public static int     CANX;     //Canvas x size
+    public static int     CANY;     //Canvas y size 
 
 
     public Settings(){

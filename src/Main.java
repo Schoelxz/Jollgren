@@ -41,7 +41,6 @@ public class Main {
         }else{
             System.setProperty("sun.java2d.opengl", String.valueOf(Settings.HWACCEL));
         }
-        
         JFrame mainFrame = createWindow("Untitled", JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override

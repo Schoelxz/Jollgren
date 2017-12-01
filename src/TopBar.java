@@ -69,6 +69,7 @@ public class TopBar extends JMenuBar implements ActionListener{
         //Add "save as" item to file menu
         this._save_as = new JMenuItem("Save file as"); 
         this.file.add(_save_as);
+        this._save_as.addActionListener(this);
 
         //Add "undo" item to 'edit' menu
         this._undo = new JMenuItem("Undo");
@@ -145,6 +146,9 @@ public class TopBar extends JMenuBar implements ActionListener{
         }
         else  if(e.getSource() == this._redo){
             this.canvas.redo();
+        }
+        else if(e.getSource() == this._save_as){
+            FileMan.saveas();
         }
     }
 }
