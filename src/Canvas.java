@@ -59,8 +59,11 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
             {
                 //Only fill gap if next Dot has an offset of more
                 //than half of it's thickness from previous Dot.
-                if(((Math.abs(dots.get(i).getX()-prevX)>(int)(Settings.THICK/2)) || (Math.abs(dots.get(i).getY()-prevY)>(int)(Settings.THICK/2))) &&
-                     dots.get(i-1).inLine() == Dot.INLINE && dots.get(i).inLine() == Dot.INLINE ){
+                if(((Math.abs(dots.get(i).getX()-prevX)>(int)(Settings.THICK/2)) ||
+                    (Math.abs(dots.get(i).getY()-prevY)>(int)(Settings.THICK/2))) &&
+                    dots.get(i-1).inLine() == Dot.INLINE &&
+                    dots.get(i).inLine() == Dot.INLINE )
+                {
                     Graphics2D g2d = (Graphics2D) g.create();
                     BasicStroke stroke;
                     switch(Settings.STYLE){
@@ -77,11 +80,12 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
                     // start from middle of previous Dot.
                     g2d.drawLine(prevX+(int)(Settings.THICK/2), prevY+(int)(Settings.THICK/2), 
                                  dots.get(i).getX()+(int)(Settings.THICK/2), dots.get(i).getY()+(int)(Settings.THICK/2));
-                    g2d.dispose();
-                    
+                    g2d.dispose();   
                 }
-                else{
-                    switch(Settings.STYLE){
+                else
+                {
+                    switch(Settings.STYLE)
+                    {
                         case 0: g.fillRect(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
                                 break;
                         case 1: g.fillOval(dots.get(i).getX(), dots.get(i).getY(), Settings.THICK, Settings.THICK);
@@ -127,7 +131,6 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
     @Override
     public void keyTyped(KeyEvent e) {}
     // </Unused functions>
-    
     
     @Override
     public void mouseReleased(MouseEvent e) 
