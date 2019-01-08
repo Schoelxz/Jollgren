@@ -30,7 +30,8 @@ class TypeNotImplementedException extends Exception{
     private static final long serialVersionUID = 3332190948251899122L;
 }
 
-public class Settings{
+public class Settings
+{
     /**
      * Important! In order for this to work all variables below must be of primitive type
      * and be applicable to String.valueOf().

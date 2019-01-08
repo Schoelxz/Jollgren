@@ -20,11 +20,13 @@
 import java.awt.event.*;
 import javax.swing.*;
 
-
-public class Main {
-    public static void main(String[] args){
+public class Main 
+{ 
+    public static void main(String[] args)
+    {
         new Settings();
-
+        new WindowHandler();
+        
         //Set system look and feel
         try {
              UIManager.setLookAndFeel(
@@ -33,7 +35,7 @@ public class Main {
         catch (Exception e) {
              JOptionPane.showMessageDialog(null,"Couldn't set theme, using default.");
         }
-
+        
         //enable hardware acceleration
         //Use d3d for Windows and openGL for other
         if(System.getProperty("os.name").startsWith("Windows")){
@@ -41,28 +43,8 @@ public class Main {
         }else{
             System.setProperty("sun.java2d.opengl", String.valueOf(Settings.HWACCEL));
         }
-        JFrame mainFrame = createWindow("Untitled", JFrame.DO_NOTHING_ON_CLOSE);
-        mainFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e){
-                Settings.save(); //Save settings
-                mainFrame.dispose(); //Dispose of frame
-                System.exit(0); //exit program
-            }
-        });
+
     }
 
-    public static JFrame createWindow(String title ,int closeOp){
-        JFrame f = new JFrame(title);
-        f.setDefaultCloseOperation(closeOp);
-        Canvas c = new Canvas();
-        JMenuBar top = new TopBar(c);
-        f.setJMenuBar(top);
-        f.add(c);
-        f.setSize(Settings.WINX, Settings.WINY);
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
-        return(f);
-    }
 }
 

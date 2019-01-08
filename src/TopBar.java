@@ -124,7 +124,7 @@ public class TopBar extends JMenuBar implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == this._new_window){
-            Main.createWindow("Untitled",JFrame.DISPOSE_ON_CLOSE);
+            WindowHandler.windowHandler.createWindow("Untitled",JFrame.DISPOSE_ON_CLOSE);
         }
         else if(e.getSource() == this._view_license){
             try{
