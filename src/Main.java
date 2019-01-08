@@ -25,7 +25,7 @@ public class Main
     public static void main(String[] args)
     {
         new Settings();
-        new WindowHandler();
+        new FrameMan();
         
         //Set system look and feel
         try {

@@ -25,7 +25,8 @@ import javax.swing.*;
 import java.lang.Math;
 
 
-public class Canvas extends JPanel implements KeyListener, MouseListener, MouseMotionListener{
+public class Canvas extends JPanel implements KeyListener, MouseListener, MouseMotionListener
+{
     private static final long serialVersionUID = 4865446981722813115L;
 
     //List for objects on canvas
@@ -34,7 +35,8 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
     //List for removed objects
     private ArrayList<Dot> removedDots;
     
-    public Canvas(){
+    public Canvas()
+    {
         this.dots = new ArrayList<>();
         this.removedDots=new ArrayList<>();
         this.addMouseListener(this);
@@ -42,14 +44,19 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
         this.setFocusable(true);
         this.addKeyListener(this);
     }
+    
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
         this.setBackground(Color.WHITE);
         int prevX = -1, prevY = -1;
-        for(int i = 0; i < dots.size(); i++){
+        
+        for(int i = 0; i < dots.size(); i++)
+        {
             g.setColor(dots.get(i).getColor());
-            if(i>0){
+            if(i>0)
+            {
                 //Only fill gap if next Dot has an offset of more
                 //than half of it's thickness from previous Dot.
                 if(((Math.abs(dots.get(i).getX()-prevX)>(int)(Settings.THICK/2)) || (Math.abs(dots.get(i).getY()-prevY)>(int)(Settings.THICK/2))) &&
@@ -98,6 +105,7 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
         }
     }
     
+    // <Unused functions>
     @Override
     public void mouseClicked(MouseEvent e){}
     
@@ -109,12 +117,34 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
     
     @Override
     public void mousePressed(MouseEvent e) {}
-
+    
     @Override
-    public void mouseReleased(MouseEvent e) {
-        if(e.getButton()==MouseEvent.BUTTON1){
-            Dot d = new Dot(new int[]{e.getX()-(int)(Settings.THICK/2),e.getY()-(int)(Settings.THICK/2)},
-                            new Color(Settings.RED, Settings.GREEN, Settings.BLUE), Dot.NOLINE);
+    public void mouseMoved(MouseEvent e) {}
+     
+    @Override
+    public void keyReleased(KeyEvent e) {}
+    
+    @Override
+    public void keyTyped(KeyEvent e) {}
+    // </Unused functions>
+    
+    
+    @Override
+    public void mouseReleased(MouseEvent e) 
+    {
+        if(e.getButton()==MouseEvent.BUTTON1)
+        {
+            Dot d = new Dot(
+                        new int[]{
+                            e.getX()-(int)(Settings.THICK/2),
+                            e.getY()-(int)(Settings.THICK/2)},
+                        new Color(
+                            Settings.RED,
+                            Settings.GREEN,
+                            Settings.BLUE),
+                            Dot.NOLINE);
+            
+            
             this.dots.add(d);
             //Remove history
             this.removedDots = new ArrayList<>();
@@ -122,43 +152,45 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
         }
     }
     
-    @Override
-    public void mouseMoved(MouseEvent e) {}
-    
     @Override 
-    public void mouseDragged(MouseEvent e) {
+    public void mouseDragged(MouseEvent e) 
+    {
         int curX = e.getX(), curY = e.getY();
-        Dot d = new Dot(new int[]{curX-(int)(Settings.THICK/2),curY-(int)(Settings.THICK/2)},
-                        new Color(Settings.RED, Settings.GREEN, Settings.BLUE), Dot.INLINE);
+        Dot d = new Dot(
+                    new int[]{
+                        curX-(int)(Settings.THICK/2),
+                        curY-(int)(Settings.THICK/2)},
+                    new Color(
+                            Settings.RED,
+                            Settings.GREEN,
+                            Settings.BLUE),
+                            Dot.INLINE);
         this.dots.add(d);
         this.repaint();
-    
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-       if(e.getKeyCode() == KeyEvent.VK_Z && (e.getModifiers() & KeyEvent.CTRL_MASK) != 0){
+    public void keyPressed(KeyEvent e) 
+    {
+       if(e.getKeyCode() == KeyEvent.VK_Z && (e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
             this.undo();
-       }
-       else if(e.getKeyCode() == KeyEvent.VK_Y && (e.getModifiers() & KeyEvent.CTRL_MASK) != 0){
+       else if(e.getKeyCode() == KeyEvent.VK_Y && (e.getModifiers() & KeyEvent.CTRL_MASK) != 0)
            this.redo();
-       }
     }
     
-    @Override
-    public void keyReleased(KeyEvent e) {}
-    
-    @Override
-    public void keyTyped(KeyEvent e) {}
-
-    public void undo(){
-        if(this.dots.size() > 0){
+    public void undo()
+    {
+        if(this.dots.size() > 0)
+        {
             //Remove single dot
             this.removedDots.add(dots.remove(this.dots.size()-1));
+            
             //All lines end with a single dot, thus if a line follows after removal of dot,
             //then remove the line.
-            if(this.dots.size() > 0 && this.dots.get(this.dots.size()-1).inLine()){
-                while(this.dots.size() > 0 && this.dots.get(this.dots.size()-1).inLine()){
+            if(this.dots.size() > 0 && this.dots.get(this.dots.size()-1).inLine())
+            {
+                while(this.dots.size() > 0 && this.dots.get(this.dots.size()-1).inLine())
+                {
                     //Remove object from the dot list
                     Dot d = this.dots.remove(this.dots.size()-1);
                     //Save removed object in remoedDots list
@@ -168,23 +200,25 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseM
         }
         this.validate();
         this.repaint();
-        
     }
+    
     //Recursive implementation. || #PLANNED!# Might do this with undo also.
-    public void redo(){
-        if(this.removedDots.size() > 0){
+    public void redo()
+    {
+        if(this.removedDots.size() > 0)
+        {
             Dot d = this.removedDots.remove(this.removedDots.size()-1);
             this.dots.add(d);
-            if(d.inLine() && this.removedDots.size() > 0){
+            if(d.inLine() && this.removedDots.size() > 0)
                 this.redo();
-            }
+            
             this.repaint();
         }
     }
+} //Canvas class ends
 
-}
-
-class Dot {
+class Dot 
+{
     private int[] a;
     private Color c;
     private Boolean inLine;
@@ -192,25 +226,30 @@ class Dot {
     public static final Boolean INLINE = true;
     public static final Boolean NOLINE = false;
 
-    public Dot (int[] a, Color c, Boolean inLine){
+    public Dot (int[] a, Color c, Boolean inLine)
+    {
         this.a =new int[2];
         this.a[0] = a[0]; this.a[1] = a[1];
         this.c = c;
         this.inLine = inLine;
     }
 
-    public Boolean inLine(){
+    public Boolean inLine()
+    {
         return inLine;
     }
-    public int getX(){
+    public int getX()
+    {
         return this.a[0];
     }
 
-    public int getY(){
+    public int getY()
+    {
         return this.a[1];
     }
 
-    public Color getColor(){
+    public Color getColor()
+    {
         return this.c;
     }
 }

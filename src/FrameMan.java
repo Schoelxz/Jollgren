@@ -14,20 +14,20 @@ import javax.swing.JMenuBar;
  *
  * @author Schoel
  */
-public class WindowHandler 
+public class FrameMan 
 {
     //Singleton?
-    public static WindowHandler windowHandler;
-    //List of windows
+    public static FrameMan windowHandler;
+    
     public static ArrayList<JFrame> jayFrames;
     
-    public WindowHandler()
+    public FrameMan()
     {
         if(windowHandler == null)
         {
             windowHandler = this;
             jayFrames = new ArrayList<JFrame>();
-            WindowHandler.windowHandler.createWindow("Main Window", JFrame.DO_NOTHING_ON_CLOSE);
+            FrameMan.windowHandler.createWindow("Main Window", JFrame.DO_NOTHING_ON_CLOSE);
         }
     }
     
@@ -35,7 +35,6 @@ public class WindowHandler
     {
         System.out.println("Creating new window.");
         JFrame f = new JFrame(title);
-        //Add window(JFrame) to list
         jayFrames.add(f);
         f.setDefaultCloseOperation(closeOp);
         Canvas c = new Canvas();
@@ -61,9 +60,11 @@ public class WindowHandler
                         System.out.println("Window closed: " + jf.getTitle());
                         jayFrames.remove(jf); //Remove frame from list
                         System.out.println("Number of windows left: " + jayFrames.size());
+                        
+                        //If no more frames exist..
                         if(jayFrames.isEmpty())
                         {
-                            System.out.println("Saving and Exiting program.");
+                            System.out.println("Saving and exiting program.");
                             Settings.save(); //Save settings
                             System.exit(0); //exit program
                         }
